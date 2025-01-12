@@ -4,12 +4,12 @@ import (
 	"log"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"pharmacy-app-server/models"
 	"pharmacy-app-server/routes"
 )
 
@@ -28,16 +28,19 @@ func main() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	err = db.AutoMigrate(&models.User{}, &models.Category{}, &models.Medicine{}, &models.Inquiry{})
-	if err != nil {
-		log.Fatal("failed to migrate database")
-	}
-
 	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	routes.RegisterUserRoutes(r, db)
 	routes.RegisterCategoryRoutes(r, db)
-	routes.RegisterMedicineRoutes(r, db)
+	routes.RegisterProductRoutes(r, db)
 	routes.RegisterInquiryRoutes(r, db)
 
 	port := os.Getenv("PORT")

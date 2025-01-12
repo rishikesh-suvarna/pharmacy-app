@@ -37,7 +37,7 @@ func TestGetInquiries(t *testing.T) {
 func TestCreateInquiry(t *testing.T) {
 	r := setupInquiryRouter()
 
-	inquiry := models.Inquiry{Message: "Test Inquiry", UserID: 1, MedicineID: 1}
+	inquiry := models.Inquiry{Message: "Test Inquiry", UserID: 1, ProductID: 1}
 	jsonValue, _ := json.Marshal(inquiry)
 	req, _ := http.NewRequest("POST", "/api/inquiries", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
@@ -54,7 +54,7 @@ func TestGetInquiryByID(t *testing.T) {
 	r := setupInquiryRouter()
 
 	// Create an inquiry first
-	inquiry := models.Inquiry{Message: "Test Inquiry", UserID: 1, MedicineID: 1}
+	inquiry := models.Inquiry{Message: "Test Inquiry", UserID: 1, ProductID: 1}
 	jsonValue, _ := json.Marshal(inquiry)
 	req, _ := http.NewRequest("POST", "/api/inquiries", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
