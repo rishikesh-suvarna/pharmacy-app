@@ -35,8 +35,10 @@ func main() {
 
 	r := gin.Default()
 
-	routes.RegisterMedicineRoutes(r, db)
 	routes.RegisterUserRoutes(r, db)
+	routes.RegisterCategoryRoutes(r, db)
+	routes.RegisterMedicineRoutes(r, db)
+	routes.RegisterInquiryRoutes(r, db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
